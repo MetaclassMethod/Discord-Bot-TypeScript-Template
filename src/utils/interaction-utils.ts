@@ -21,8 +21,8 @@ const IGNORED_ERRORS = [
     DiscordApiErrors.UnknownGuild,
     DiscordApiErrors.UnknownUser,
     DiscordApiErrors.UnknownInteraction,
-    DiscordApiErrors.CannotSendMessagesToThisUser, // User blocked bot or DM disabled
-    DiscordApiErrors.ReactionWasBlocked, // User blocked bot or DM disabled
+    DiscordApiErrors.CannotSendMessagesToThisUser,
+    DiscordApiErrors.ReactionWasBlocked,
     DiscordApiErrors.MaximumActiveThreads,
 ];
 

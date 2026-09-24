@@ -1,17 +1,28 @@
 import { Message } from 'discord.js';
 
 import { EventHandler, TriggerHandler } from './index.js';
+import { SpamFilterService } from '../services/index.js';
 
 export class MessageHandler implements EventHandler {
     constructor(private triggerHandler: TriggerHandler) {}
 
     public async process(msg: Message): Promise<void> {
-        // Don't respond to system messages or self
         if (msg.system || msg.author.id === msg.client.user?.id) {
             return;
         }
 
-        // Process trigger
+        if (await SpamFilterService.process(msg)) {
+            return;
+        }
+
         await this.triggerHandler.process(msg);
+    }
+
+    public async processEdit(msg: Message): Promise<void> {
+        if (msg.system || msg.author.id === msg.client.user?.id) {
+            return;
+        }
+
+        await SpamFilterService.process(msg);
     }
 }

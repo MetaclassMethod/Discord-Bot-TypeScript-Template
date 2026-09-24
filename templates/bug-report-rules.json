@@ -1,0 +1,72 @@
+{
+    "title": "⚠️ READ ME BEFORE POSTING ⚠️",
+    "components": [
+        {
+            "type": 17,
+            "accent_color": 7725,
+            "spoiler": false,
+            "components": [
+                {
+                    "type": 10,
+                    "content": "# Bug Report Guidelines\n> Thank you for your interest in creating a bug report for one of our games. Please ensure you have read the **following information in full** before submitting a report. Failure to do so may result in your post being deleted, your access to this channel being revoked, or a removal from the server."
+                },
+                {
+                    "type": 12,
+                    "items": [
+                        {
+                            "media": {
+                                "url": "attachment://bug_submitted.png"
+                            },
+                            "description": null,
+                            "spoiler": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": 17,
+            "accent_color": null,
+            "spoiler": false,
+            "components": [
+                {
+                    "type": 10,
+                    "content": "# 🗒️ Rules"
+                },
+                {
+                    "type": 10,
+                    "content": "Failure to comply will result in punishments. Knowingly bypassing the rules will result in a permanent ban from the Discord server.\n\n- Do not create a post that isn't about reporting a bug;\n- Imagine you are explaining the bug to a person, who has never played the game before when describing the bug;\n- Follow the server rules at **all times**. Breaking any server-based rule will result in your access being revoked."
+                }
+            ]
+        },
+        {
+            "type": 17,
+            "accent_color": null,
+            "spoiler": false,
+            "components": [
+                {
+                    "type": 10,
+                    "content": "# ⚠️ Format"
+                },
+                {
+                    "type": 14,
+                    "divider": true,
+                    "spacing": 1
+                },
+                {
+                    "type": 10,
+                    "content": "**1. Bug Description:**\n- Describe the bug in detail. Explain what happened and what you expected to happen instead.\n\n**2. Platform:**\n- PC / Console / Mobile / Tablet / ...\n\n**3. Where?:**\n-  In what gamemode did this bug occur?\n\n**4. Reproduction:**\n- Describe how this bug can be reproduced.\n\n**5. Screenshots or Videos:**\n- Attach screenshots or a video showing the bug.\n- Include your F9 console (PC/Laptop) or `/console` output (Mobile/Tablet), especially any red error messages."
+                },
+                {
+                    "type": 14,
+                    "divider": true,
+                    "spacing": 1
+                },
+                {
+                    "type": 10,
+                    "content": "**Failing to follow these will result in your post being removed**"
+                }
+            ]
+        }
+    ]
+}

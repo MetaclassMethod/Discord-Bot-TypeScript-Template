@@ -10,7 +10,6 @@ import {
     userBuilder,
 } from '../builders/discord-builders.js';
 
-// Mock dependencies
 vi.mock('../../src/utils/index.js', () => ({
     InteractionUtils: {
         send: vi.fn().mockResolvedValue({}),
@@ -40,12 +39,10 @@ vi.mock('../../src/models/enum-helpers/index.js', () => ({
 }));
 
 describe('CommandUtils', () => {
-    // Test findCommand method
     describe('findCommand', () => {
         let mockCommands: Command[];
 
         beforeEach(() => {
-            // Create mock commands using the helper
             mockCommands = [
                 createMockCommand({ names: ['test'] }),
                 createMockCommand({ names: ['user', 'info'] }),
@@ -69,7 +66,6 @@ describe('CommandUtils', () => {
         });
     });
 
-    // Test runChecks method
     describe('runChecks', () => {
         let mockCommand: Command & {
             cooldown: { take: ReturnType<typeof vi.fn>; amount: number; interval: number };
@@ -78,9 +74,8 @@ describe('CommandUtils', () => {
         let mockEventData: any;
 
         beforeEach(() => {
-            // Create a mock command with cooldown using helper
             const cmdMock = createMockCommand({
-                requireClientPerms: ['ViewChannel', 'SendMessages'], // Use correct permission names
+                requireClientPerms: ['ViewChannel', 'SendMessages'],
                 cooldown: {
                     take: vi.fn(),
                     amount: 1,
@@ -88,7 +83,6 @@ describe('CommandUtils', () => {
                 },
             });
 
-            // Explicitly type the mock command to include the cooldown property
             mockCommand = cmdMock as unknown as Command & {
                 cooldown: {
                     take: ReturnType<typeof vi.fn>;
@@ -97,7 +91,6 @@ describe('CommandUtils', () => {
                 };
             };
 
-            // Create a mock interaction using the new builder
             const user = userBuilder().withId('123456789012345678').build();
             const clientUser = clientUserBuilder().withId('987654321098765432').build();
             const channel = textChannelBuilder().botHasPerms().build();
@@ -108,12 +101,10 @@ describe('CommandUtils', () => {
                 .withChannel(channel)
                 .build();
 
-            // Create mock event data
             mockEventData = { lang: 'en-US' };
         });
 
         it('should pass checks when all requirements are met', async () => {
-            // Mock cooldown.take to return false (not limited)
             mockCommand.cooldown.take.mockReturnValue(false);
 
             const result = await CommandUtils.runChecks(
@@ -127,10 +118,8 @@ describe('CommandUtils', () => {
         });
 
         it('should fail and send message when on cooldown', async () => {
-            // Mock the imported InteractionUtils.send function
             const { InteractionUtils } = await import('../../src/utils/index.js');
 
-            // Mock cooldown.take to return true (is limited)
             mockCommand.cooldown.take.mockReturnValue(true);
 
             const result = await CommandUtils.runChecks(
@@ -145,10 +134,8 @@ describe('CommandUtils', () => {
         });
 
         it('should fail when missing client permissions', async () => {
-            // Mock the imported InteractionUtils.send function
             const { InteractionUtils } = await import('../../src/utils/index.js');
 
-            // Create a new interaction with a channel that has missing permissions
             const user = userBuilder().withId('123456789012345678').build();
             const clientUser = clientUserBuilder().withId('987654321098765432').build();
             const channelWithNoPerms = textChannelBuilder()
@@ -162,17 +149,14 @@ describe('CommandUtils', () => {
                 .withChannel(channelWithNoPerms)
                 .build();
 
-            // Set up command for test
             mockCommand.cooldown.take.mockReturnValue(false);
 
-            // Run test
             const result = await CommandUtils.runChecks(
                 mockCommand,
                 mockInteraction,
                 mockEventData
             );
 
-            // Verify the result
             expect(result).toBe(false);
             expect(InteractionUtils.send).toHaveBeenCalled();
         });

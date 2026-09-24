@@ -46,13 +46,11 @@ export class Logger {
     }
 
     public static async error(message: string, obj?: any): Promise<void> {
-        // Log just a message if no error object
         if (!obj) {
             logger.error(message);
             return;
         }
 
-        // Otherwise log details about the error
         if (typeof obj === 'string') {
             logger
                 .child({
@@ -63,9 +61,7 @@ export class Logger {
             let resText: string;
             try {
                 resText = await obj.text();
-            } catch {
-                // Ignore
-            }
+            } catch {}
             logger
                 .child({
                     path: obj.url,

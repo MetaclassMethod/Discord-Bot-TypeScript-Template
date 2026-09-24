@@ -1,11 +1,11 @@
-import { ActivityType, ShardingManager } from 'discord.js';
+import { ShardingManager } from 'discord.js';
 import { createRequire } from 'node:module';
 
 import { Job } from './index.js';
 import { CustomClient } from '../extensions/index.js';
 import { BotSite } from '../models/config-models.js';
-import { HttpService, Lang, Logger } from '../services/index.js';
-import { ShardUtils } from '../utils/index.js';
+import { HttpService, Logger } from '../services/index.js';
+import { PresenceUtils, ShardUtils } from '../utils/index.js';
 
 const require = createRequire(import.meta.url);
 let BotSites: BotSite[] = require('../../config/bot-sites.json');
@@ -32,16 +32,19 @@ export class UpdateServerCountJob extends Job {
     public async run(): Promise<void> {
         let serverCount = await ShardUtils.serverCount(this.shardManager);
 
-        let type = ActivityType.Streaming;
-        let name = `to ${serverCount.toLocaleString()} servers`;
-        let url = Lang.getCom('links.stream');
+        let { type, name, url, assets } = PresenceUtils.configured();
 
         await this.shardManager.broadcastEval(
             (client, context) => {
                 let customClient = client as CustomClient;
-                return customClient.setPresence(context.type, context.name, context.url);
+                return customClient.setPresence(
+                    context.type,
+                    context.name,
+                    context.url,
+                    context.assets
+                );
             },
-            { context: { type, name, url } }
+            { context: { type, name, url, assets } }
         );
 
         Logger.info(

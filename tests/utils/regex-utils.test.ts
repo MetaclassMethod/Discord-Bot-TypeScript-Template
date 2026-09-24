@@ -2,7 +2,6 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { RegexUtils } from '../../src/utils/index.js';
 
-// Mock any configs that might be loaded
 vi.mock('../../config/config.json', () => ({}));
 vi.mock('../../config/debug.json', () => ({}));
 vi.mock('../../lang/logs.json', () => ({}));

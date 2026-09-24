@@ -2,23 +2,10 @@ import { EmbedBuilder } from 'discord.js';
 import { DateTime } from 'luxon';
 import { vi } from 'vitest';
 
-/**
- * Helper to force-assign read-only properties
- * @param obj - The object to assign the value to
- * @param key - The key to assign the value to
- * @param value - The value to assign to the key
- */
 export function mockProp<T, K extends keyof T>(obj: T, key: K, value: T[K]): void {
     Object.defineProperty(obj, key, { value, configurable: true });
 }
 
-/**
- * Creates a date that is a specified time relative to now
- * @param days Days to add (or subtract with negative values)
- * @param hours Hours to add (or subtract with negative values)
- * @param minutes Minutes to add (or subtract with negative values)
- * @returns Date object
- */
 export function createRelativeDate(days: number = 0, hours: number = 0, minutes: number = 0): Date {
     const now = new Date();
     const result = new Date(now);
@@ -38,11 +25,6 @@ export function createRelativeDate(days: number = 0, hours: number = 0, minutes:
     return result;
 }
 
-/**
- * Mocks Math.random to return specific values in sequence
- * Useful for testing random number generation
- * @param values The values to return in sequence
- */
 export function mockRandomValues(...values: number[]): () => void {
     let index = 0;
     const originalRandom = Math.random;
@@ -53,15 +35,11 @@ export function mockRandomValues(...values: number[]): () => void {
         return result;
     });
 
-    // Return a cleanup function
     return () => {
         Math.random = originalRandom;
     };
 }
 
-/**
- * Creates a mock EntityManager with basic functionality
- */
 export function createMockEntityManager(): any {
     return {
         find: vi.fn().mockResolvedValue([]),
@@ -73,11 +51,6 @@ export function createMockEntityManager(): any {
     };
 }
 
-/**
- * Get the description from a payload
- * @param payload - The payload to get the description from
- * @returns The description from the payload
- */
 export function getDescriptionFromPayload(payload: any): string {
     if (typeof payload === 'string') return payload;
     if (payload && typeof payload === 'object' && payload.description) return payload.description;
@@ -93,12 +66,6 @@ export function getDescriptionFromStringOrEmbed(message: string | EmbedBuilder):
     return '';
 }
 
-/**
- * Set the system time to a specific date and time
- * @param birthday - The birthday to set the system time to
- * @param hour - The hour to set the system time to
- * @param timeZone - The time zone to set the system time to
- */
 export function setSystemTime(
     day: { day: number; month: number; year?: number },
     hour: number = 0,

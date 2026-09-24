@@ -21,18 +21,15 @@ export class ReactionHandler implements EventHandler {
     ) {}
 
     public async process(msgReaction: MessageReaction, msg: Message, reactor: User): Promise<void> {
-        // Don't respond to self, or other bots
         if (reactor.id === msgReaction.client.user?.id || reactor.bot) {
             return;
         }
 
-        // Check if user is rate limited
         let limited = this.rateLimiter.take(msg.author.id);
         if (limited) {
             return;
         }
 
-        // Try to find the reaction the user wants
         let reaction = this.findReaction(msgReaction.emoji.name);
         if (!reaction) {
             return;
@@ -46,19 +43,16 @@ export class ReactionHandler implements EventHandler {
             return;
         }
 
-        // Check if the embeds author equals the reactors tag
         if (reaction.requireEmbedAuthorTag && msg.embeds[0]?.author?.name !== reactor.tag) {
             return;
         }
 
-        // Get data from database
         let data = await this.eventDataService.create({
             user: reactor,
             channel: msg.channel,
             guild: msg.guild,
         });
 
-        // Execute the reaction
         await reaction.execute(msgReaction, msg, reactor, data);
     }
 

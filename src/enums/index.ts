@@ -1,3 +1,3 @@
-export { DevCommandName } from './dev-command-name.js';
-export { HelpOption } from './help-option.js';
-export { InfoOption } from './info-option.js';
+export { BlockBugOption } from './block-bug-option.js';
+export { BugReportRequirement } from './bug-report-requirement.js';
+export { CloseBugOption } from './close-bug-option.js';

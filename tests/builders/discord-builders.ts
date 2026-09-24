@@ -26,9 +26,6 @@ import { DeepMockProxy, mockDeep } from 'vitest-mock-extended';
 import { Command } from '../../src/commands/index.ts';
 import { mockProp } from '../helpers/index.ts';
 
-// -----------------------------------------------------------------------------
-// User Builder
-// -----------------------------------------------------------------------------
 export interface UserBuilder {
     withId(id: string): UserBuilder;
     withUsername(name: string): UserBuilder;
@@ -48,7 +45,6 @@ export function userBuilder(): UserBuilder {
     mockProp(user, 'bot', false);
     user.send.mockResolvedValue({} as Message<false>);
 
-    // Set up toString method to return Discord mention format
     Object.defineProperty(user, 'toString', {
         value: vi.fn(() => `<@${user.id}>`),
         writable: true,
@@ -60,7 +56,6 @@ export function userBuilder(): UserBuilder {
             mockProp(user, 'username', `username-${id}`);
             mockProp(user, 'globalName', `globalName-${id}`);
             mockProp(user, 'displayName', user.globalName ?? user.username);
-            // Update toString to use new ID
             Object.defineProperty(user, 'toString', {
                 value: vi.fn(() => `<@${id}>`),
                 writable: true,
@@ -107,9 +102,6 @@ export function userBuilder(): UserBuilder {
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// Guild Builder
-// -----------------------------------------------------------------------------
 export interface GuildBuilder {
     withId(id: string): GuildBuilder;
     withName(name: string): GuildBuilder;
@@ -123,12 +115,9 @@ export function guildBuilderFactory(): GuildBuilder {
     mockProp(guild, 'id', 'guild123');
     mockProp(guild, 'name', 'Test Guild');
 
-    // Mock the channels manager with a working fetch method
     const channelsCollection = new Collection();
-    // Use type assertion to work around complex Discord.js typing
     (guild.channels.fetch as any) = vi.fn().mockResolvedValue(channelsCollection);
 
-    // Mock the roles manager with a working fetch method
     const rolesCollection = new Collection();
     (guild.roles.fetch as any) = vi.fn().mockResolvedValue(rolesCollection);
 
@@ -165,18 +154,14 @@ export function guildBuilderFactory(): GuildBuilder {
 export function guildBuilder(): DeepMockProxy<Guild> {
     let guild = guildBuilderFactory().build();
 
-    // Ensure guild.roles.resolve exists as a function so it can be spied upon.
-    // Assigning vi.fn() makes it a Vitest mock function from the start.
-    // Use 'as any' to bypass strict overload type checking for this assignment.
     guild.roles.resolve = vi.fn() as any;
 
-    // Now spy on it and provide the actual mock implementation.
     vi.spyOn(guild.roles, 'resolve').mockImplementation((roleResolvable: RoleResolvable) => {
         if (typeof roleResolvable === 'string') {
             const mockRole = mockDeep<Role>();
             mockProp(mockRole, 'id', roleResolvable);
             mockProp(mockRole, 'name', `role-${roleResolvable}`);
-            mockProp(mockRole, 'guild', guild); // No need for 'as any' if guild is typed correctly
+            mockProp(mockRole, 'guild', guild);
             return mockRole;
         }
         if (roleResolvable instanceof Role) {
@@ -185,8 +170,6 @@ export function guildBuilder(): DeepMockProxy<Guild> {
         return null;
     });
 
-    // The channels.fetch() and roles.fetch() are already mocked from guildBuilderFactory,
-    // but let's ensure they work properly for any roles/channels that might be needed
     const channelsCollection = new Collection();
     (guild.channels.fetch as any) = vi.fn().mockResolvedValue(channelsCollection);
 
@@ -196,9 +179,6 @@ export function guildBuilder(): DeepMockProxy<Guild> {
     return guild;
 }
 
-// -----------------------------------------------------------------------------
-// GuildMember Builder
-// -----------------------------------------------------------------------------
 export interface GuildMemberBuilder {
     withId(id: string): GuildMemberBuilder;
     withUser(user: DeepMockProxy<User>): GuildMemberBuilder;
@@ -217,11 +197,9 @@ export function guildMemberBuilder(userId: string = 'user123'): GuildMemberBuild
     mockProp(member, 'user', userBuilder().withId(userId).build());
     mockProp(member, 'guild', guildBuilderFactory().build());
     mockProp(member, 'nickname', null);
-    mockProp(member, 'displayName', member.nickname ?? member.user.username); // Defaults to user's username
+    mockProp(member, 'displayName', member.nickname ?? member.user.username);
     member.send.mockResolvedValue({} as Message<false>);
 
-    // Properly mock the toString method
-    // TODO: make this a helper function
     Object.defineProperty(member, 'toString', {
         value: vi.fn(() => `<@${member.id}>`),
         writable: true,
@@ -229,7 +207,6 @@ export function guildMemberBuilder(userId: string = 'user123'): GuildMemberBuild
     });
 
     const rolesMock = mockDeep<GuildMemberRoleManager>();
-    // Explicitly initialize .cache to ensure it's a functional Collection
     (rolesMock as any).cache = new Collection<string, Role>();
     mockProp(rolesMock, 'highest', { position: 1, id: 'role1' } as any);
     rolesMock.add.mockImplementation(async () => member as unknown as GuildMember);
@@ -240,9 +217,6 @@ export function guildMemberBuilder(userId: string = 'user123'): GuildMemberBuild
         withId: (id: string) => {
             mockProp(member, 'id', id);
             mockProp(member.user, 'id', id);
-            // If user.username changes due to id change, displayName might need update.
-            // However, userBuilder().withId() only changes id, not username.
-            // If displayName was based on username & no nickname, it remains consistent.
             mockProp(member.user, 'username', `username-${id}`);
             mockProp(member.user, 'globalName', `globalName-${id}`);
             mockProp(member.user, 'displayName', member.user.globalName ?? member.user.username);
@@ -310,9 +284,6 @@ export function guildMemberBuilder(userId: string = 'user123'): GuildMemberBuild
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// TextChannel Builder
-// -----------------------------------------------------------------------------
 export interface TextChannelBuilder {
     withId(id: string): TextChannelBuilder;
     withName(name: string): TextChannelBuilder;
@@ -337,7 +308,7 @@ export function textChannelBuilder(): TextChannelBuilder {
         size: 3,
         filter: vi.fn().mockReturnValue([]),
     } as any);
-    setPermissions(channel, true); // default → bot **has** perms
+    setPermissions(channel, true);
     const api: TextChannelBuilder = {
         withId: (id: string) => {
             mockProp(channel, 'id', id);
@@ -380,9 +351,6 @@ export function textChannelBuilder(): TextChannelBuilder {
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// DMChannel Builder
-// -----------------------------------------------------------------------------
 export interface DMChannelBuilder {
     withId(id: string): DMChannelBuilder;
     withRecipient(user: DeepMockProxy<User>): DMChannelBuilder;
@@ -395,14 +363,11 @@ export function dmChannelBuilder(): DMChannelBuilder {
     mockProp(channel, 'id', 'dmchannel123');
     mockProp(channel, 'type', ChannelType.DM);
 
-    // Set up a default recipient
     const defaultRecipient = userBuilder().withId('dmrecipient123').build();
     mockProp(channel, 'recipient', defaultRecipient);
 
-    // Set up channel methods
     channel.send.mockResolvedValue({} as Message<false>);
 
-    // Ensure instanceof check works for DMChannel
     Object.setPrototypeOf(channel, DMChannel.prototype);
 
     const api: DMChannelBuilder = {
@@ -423,9 +388,6 @@ export function dmChannelBuilder(): DMChannelBuilder {
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// Role Builder
-// -----------------------------------------------------------------------------
 export interface RoleBuilder {
     withId(id: string): RoleBuilder;
     withName(name: string): RoleBuilder;
@@ -455,9 +417,6 @@ export function roleBuilder(): RoleBuilder {
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// Message Builder
-// -----------------------------------------------------------------------------
 export interface MessageBuilder {
     withId(id: string): MessageBuilder;
     withContent(content: string): MessageBuilder;
@@ -533,9 +492,6 @@ export function messageBuilder(): MessageBuilder {
     };
     return api;
 }
-// -----------------------------------------------------------------------------
-// Client Builder
-// -----------------------------------------------------------------------------
 export interface ClientBuilder {
     withUser(user: DeepMockProxy<ClientUser>): ClientBuilder;
     withOverrides(overrides: Partial<Client>): ClientBuilder;
@@ -573,9 +529,6 @@ export function clientBuilder(): ClientBuilder {
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// ClientUser Builder (simple)
-// -----------------------------------------------------------------------------
 export interface ClientUserBuilder {
     withId(id: string): ClientUserBuilder;
     withOverrides(overrides: Partial<ClientUser>): ClientUserBuilder;
@@ -599,9 +552,6 @@ export function clientUserBuilder(): ClientUserBuilder {
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// CommandInteraction Builder
-// -----------------------------------------------------------------------------
 export interface InteractionBuilder {
     withUser(user: DeepMockProxy<User>): InteractionBuilder;
     withChannel(channel: DeepMockProxy<TextChannel>): InteractionBuilder;
@@ -644,9 +594,6 @@ export function interactionBuilder(): InteractionBuilder {
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// ApplicationCommand, Command, RateLimiter, Client Factories
-// -----------------------------------------------------------------------------
 export function createMockApplicationCommand(
     overrides: Partial<ApplicationCommand> = {}
 ): DeepMockProxy<ApplicationCommand> {
@@ -676,18 +623,6 @@ export function createMockRateLimiter(
     return rateLimiter;
 }
 
-// export function createMockDate(timestamp: number): DeepMockProxy<Date> {
-//     const date = mockDeep<Date>();
-//     const realDate = new Date(timestamp);
-
-//     // Mock the most commonly used Date methods
-//     date.getTime.mockReturnValue(timestamp);
-//     return date;
-// }
-
-// -----------------------------------------------------------------------------
-// MessageContextMenuCommandInteraction Builder
-// -----------------------------------------------------------------------------
 export interface MessageContextMenuInteractionBuilder {
     withUser(user: DeepMockProxy<User>): MessageContextMenuInteractionBuilder;
     withChannel(channel: DeepMockProxy<TextChannel>): MessageContextMenuInteractionBuilder;
@@ -714,7 +649,6 @@ export function messageContextMenuInteractionBuilder(): MessageContextMenuIntera
     const targetMessage = messageBuilder().build();
     mockProp(interaction, 'targetMessage', targetMessage);
 
-    // Set up interaction methods
     interaction.editReply.mockResolvedValue({} as any);
     interaction.followUp.mockResolvedValue({} as any);
 
@@ -749,9 +683,6 @@ export function messageContextMenuInteractionBuilder(): MessageContextMenuIntera
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// UserContextMenuCommandInteraction Builder
-// -----------------------------------------------------------------------------
 export interface UserContextMenuInteractionBuilder {
     withUser(user: DeepMockProxy<User>): UserContextMenuInteractionBuilder;
     withChannel(channel: DeepMockProxy<TextChannel>): UserContextMenuInteractionBuilder;
@@ -779,7 +710,6 @@ export function userContextMenuInteractionBuilder(): UserContextMenuInteractionB
     const targetUser = userBuilder().withId('target123').build();
     mockProp(interaction, 'targetUser', targetUser);
 
-    // Set up interaction methods
     interaction.editReply.mockResolvedValue({} as any);
     interaction.followUp.mockResolvedValue({} as any);
 
@@ -818,9 +748,6 @@ export function userContextMenuInteractionBuilder(): UserContextMenuInteractionB
     return api;
 }
 
-// -----------------------------------------------------------------------------
-// Utility Functions
-// -----------------------------------------------------------------------------
 function setPermissions(c: DeepMockProxy<TextChannel>, ok: boolean): void {
     c.permissionsFor.mockReturnValue({ has: vi.fn().mockReturnValue(ok) } as any);
 }

@@ -32,7 +32,6 @@ export class CommandHandler implements EventHandler {
     ) {}
 
     public async process(intr: CommandInteraction | AutocompleteInteraction): Promise<void> {
-        // Don't respond to self, or other bots
         if (intr.user.id === intr.client.user?.id || intr.user.bot) {
             return;
         }
@@ -47,7 +46,6 @@ export class CommandHandler implements EventHandler {
                 : [intr.commandName];
         let commandName = commandParts.join(' ');
 
-        // Try to find the command the user wants
         let command = CommandUtils.findCommand(this.commands, commandParts);
         if (!command) {
             Logger.error(
@@ -102,14 +100,11 @@ export class CommandHandler implements EventHandler {
             return;
         }
 
-        // Check if user is rate limited
         let limited = this.rateLimiter.take(intr.user.id);
         if (limited) {
             return;
         }
 
-        // Defer interaction
-        // NOTE: Anything after this point we should be responding to the interaction
         switch (command.deferType) {
             case CommandDeferType.PUBLIC: {
                 await InteractionUtils.deferReply(intr, false);
@@ -121,12 +116,10 @@ export class CommandHandler implements EventHandler {
             }
         }
 
-        // Return if defer was unsuccessful
         if (command.deferType !== CommandDeferType.NONE && !intr.deferred) {
             return;
         }
 
-        // Get data from database
         let data = await this.eventDataService.create({
             user: intr.user,
             channel: intr.channel,
@@ -135,16 +128,13 @@ export class CommandHandler implements EventHandler {
         });
 
         try {
-            // Check if interaction passes command checks
             let passesChecks = await CommandUtils.runChecks(command, intr, data);
             if (passesChecks) {
-                // Execute the command
                 await command.execute(intr, data);
             }
         } catch (error) {
             await this.sendError(intr, data);
 
-            // Log command error
             Logger.error(
                 intr.channel instanceof TextChannel ||
                     intr.channel instanceof NewsChannel ||
@@ -178,8 +168,6 @@ export class CommandHandler implements EventHandler {
                     SHARD_ID: (intr.guild?.shardId ?? 0).toString(),
                 })
             );
-        } catch {
-            // Ignore
-        }
+        } catch {}
     }
 }

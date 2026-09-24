@@ -9,7 +9,6 @@ export class Language {
     public static Default = Locale.EnglishUS;
     public static Enabled: Locale[] = [Locale.EnglishUS, Locale.EnglishGB];
 
-    // See https://discord.com/developers/docs/reference#locales
     public static Data: {
         [key in Locale]: LanguageData;
     } = {
@@ -59,7 +58,6 @@ export class Language {
         let langCodes = enabled ? this.Enabled : Object.values(Locale).sort();
         let search = input.toLowerCase();
         let found = new Set<Locale>();
-        // Exact match
         if (found.size < limit)
             langCodes
                 .filter(langCode => langCode.toLowerCase() === search)
@@ -76,7 +74,6 @@ export class Language {
             langCodes
                 .filter(langCode => this.Data[langCode].englishName.toLowerCase() === search)
                 .forEach(langCode => found.add(langCode));
-        // Starts with search term
         if (found.size < limit)
             langCodes
                 .filter(langCode => langCode.toLowerCase().startsWith(search))
@@ -91,7 +88,6 @@ export class Language {
                     this.Data[langCode].englishName.toLowerCase().startsWith(search)
                 )
                 .forEach(langCode => found.add(langCode));
-        // Includes search term
         if (found.size < limit)
             langCodes
                 .filter(langCode => langCode.toLowerCase().startsWith(search))

@@ -6,6 +6,7 @@
         "intents": [
             "Guilds",
             "GuildMessages",
+            "MessageContent",
             "GuildMessageReactions",
             "DirectMessages",
             "DirectMessageReactions"
@@ -25,6 +26,17 @@
             "ThreadManager": 0,
             "ThreadMemberManager": 0,
             "VoiceStateManager": 0
+        }
+    },
+    "presence": {
+        "type": "Playing",
+        "name": "Pressure",
+        "url": "https://www.roblox.com/games/12411473842/Pressure",
+        "assets": {
+            "largeImage": "cover",
+            "largeText": "Pressure",
+            "smallImage": "",
+            "smallText": "Pressure"
         }
     },
     "api": {
@@ -76,5 +88,14 @@
         "rateLimit": {
             "minTimeout": 30
         }
+    },
+    "spamFilter": {
+        "enabled": true,
+        "rules": [],
+        "exemptionsEnabled": true,
+        "exemptRoleIds": [],
+        "logChannelId": "",
+        "timeoutSeconds": 0,
+        "noticeSeconds": 8
     }
 }

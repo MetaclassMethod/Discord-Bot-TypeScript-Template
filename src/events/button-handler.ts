@@ -22,18 +22,15 @@ export class ButtonHandler implements EventHandler {
     ) {}
 
     public async process(intr: ButtonInteraction): Promise<void> {
-        // Don't respond to self, or other bots
         if (intr.user.id === intr.client.user?.id || intr.user.bot) {
             return;
         }
 
-        // Check if user is rate limited
         let limited = this.rateLimiter.take(intr.user.id);
         if (limited) {
             return;
         }
 
-        // Try to find the button the user wants
         let button = this.findButton(intr.customId);
         if (!button) {
             return;
@@ -43,7 +40,6 @@ export class ButtonHandler implements EventHandler {
             return;
         }
 
-        // Check if the embeds author equals the users tag
         if (
             button.requireEmbedAuthorTag &&
             intr.message.embeds[0]?.author?.name !== intr.user.tag
@@ -51,8 +47,6 @@ export class ButtonHandler implements EventHandler {
             return;
         }
 
-        // Defer interaction
-        // NOTE: Anything after this point we should be responding to the interaction
         switch (button.deferType) {
             case ButtonDeferType.REPLY: {
                 await InteractionUtils.deferReply(intr);
@@ -64,19 +58,16 @@ export class ButtonHandler implements EventHandler {
             }
         }
 
-        // Return if defer was unsuccessful
         if (button.deferType !== ButtonDeferType.NONE && !intr.deferred) {
             return;
         }
 
-        // Get data from database
         let data = await this.eventDataService.create({
             user: intr.user,
             channel: intr.channel,
             guild: intr.guild,
         });
 
-        // Execute the button
         await button.execute(intr, data);
     }
 

@@ -23,8 +23,6 @@ export class FormatUtils {
         return `<@!${discordId}>`;
     }
 
-    // TODO: Replace with ApplicationCommand#toString() once discord.js #8818 is merged
-    // https://github.com/discordjs/discord.js/pull/8818
     public static commandMention(command: ApplicationCommand, subParts: string[] = []): string {
         let name = [command.name, ...subParts].join(' ');
         return `</${name}:${command.id}>`;
@@ -46,7 +44,7 @@ export class FormatUtils {
                             'second'
                         )
                         .toObject()
-                ).filter(([_, value]) => !!value) // Remove units that are 0
+                ).filter(([_, value]) => !!value)
             )
         ).toHuman({ maximumFractionDigits: 0 });
     }

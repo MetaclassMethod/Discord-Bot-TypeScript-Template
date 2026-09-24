@@ -1,139 +1,8 @@
 {
     "data": {
-        "displayEmbeds": {
-            "welcome": {
-                "title": "Thank you for using {{COM:bot.name}}!",
-                "description": ["{{REF:bot.description}}"],
-                "fields": [
-                    {
-                        "name": "Important {{REF:fields.commands}}",
-                        "value": ["{{CMD_LINK_HELP}} - {{REF:commandDescs.help}}"]
-                    },
-                    {
-                        "name": "{{REF:fields.links}}",
-                        "value": ["{{REF:links.docsEmbed}}", "{{REF:links.supportEmbed}}"]
-                    }
-                ]
-            },
-            "helpContactSupport": {
-                "title": "Help - {{REF:helpOptions.contactSupport}}",
-                "description": [
-                    "Have a question or feedback? Join our support server at the link below!"
-                ],
-                "fields": [
-                    {
-                        "name": "{{REF:fields.links}}",
-                        "value": ["{{REF:links.supportEmbed}}"]
-                    }
-                ]
-            },
-            "helpCommands": {
-                "title": "Help - {{REF:helpOptions.commands}}",
-                "fields": [
-                    {
-                        "name": "Commands",
-                        "value": [
-                            "To see the available commands, just type `/` and select the bot from the left side. You can then scroll through all available commands. Some commands may be hidden if you don't have permission to view them.",
-                            "",
-                            "{{CMD_LINK_TEST}} - {{REF:commandDescs.test}}",
-                            "{{CMD_LINK_INFO}} - {{REF:commandDescs.info}}"
-                        ]
-                    },
-                    {
-                        "name": "Command Permissions",
-                        "value": [
-                            "Want to restrict commands to certain roles, users, or channels? Set up permissions in the bot's integration page by going to **Server Settings** > **Integrations**, and then **Manage** for this bot."
-                        ]
-                    },
-                    {
-                        "name": "{{REF:fields.links}}",
-                        "value": ["{{REF:links.docsEmbed}}", "{{REF:links.supportEmbed}}"]
-                    }
-                ]
-            },
-            "test": {
-                "description": "Test command works!"
-            },
-            "viewDateJoined": {
-                "description": "{{TARGET}} joined on {{DATE}}!"
-            },
-            "viewDateSent": {
-                "description": "This message was sent on {{DATE}}!"
-            },
-            "about": {
-                "title": "{{COM:bot.name}} - About",
-                "description": "{{REF:bot.description}}",
-                "fields": [
-                    { "name": "Author", "value": "{{REF:links.authorEmbed}}" },
-                    {
-                        "name": "{{REF:fields.links}}",
-                        "value": [
-                            "{{REF:links.sourceEmbed}}",
-                            "{{REF:links.docsEmbed}}",
-                            "{{REF:links.termsEmbed}}",
-                            "{{REF:links.voteEmbed}}",
-                            "{{REF:links.donateEmbed}}",
-                            "{{REF:links.supportEmbed}}",
-                            "{{REF:links.inviteEmbed}}"
-                        ]
-                    },
-                    {
-                        "name": "Created With",
-                        "value": ["{{REF:links.templateEmbed}}"]
-                    }
-                ]
-            },
-            "translate": {
-                "title": "{{COM:bot.name}} - Translations",
-                "description": "Thank you to our translators who have made it possible for {{COM:bot.name}} to be used in the following languages. If you are interested in providing a translation, please contact the staff in our [support server]({{COM:links.support}})."
-            },
-            "devInfo": {
-                "title": "{{COM:bot.name}} - Developer Info",
-                "fields": [
-                    {
-                        "name": "Versions",
-                        "value": [
-                            "**Node.js**: {{NODE_VERSION}}",
-                            "**TypeScript**: {{TS_VERSION}}",
-                            "**ECMAScript**: {{ES_VERSION}}",
-                            "**discord.js**: {{DJS_VERSION}}"
-                        ]
-                    },
-                    {
-                        "name": "Stats",
-                        "value": [
-                            "**Shards**: {{SHARD_COUNT}}",
-                            "**Servers**: {{SERVER_COUNT}} ({{SERVER_COUNT_PER_SHARD}}/Shard)"
-                        ]
-                    },
-                    {
-                        "name": "Memory",
-                        "value": [
-                            "**RSS**: {{RSS_SIZE}} ({{RSS_SIZE_PER_SERVER}}/Server)",
-                            "**Heap**: {{HEAP_TOTAL_SIZE}} ({{HEAP_TOTAL_SIZE_PER_SERVER}}/Server)",
-                            "**Used**: {{HEAP_USED_SIZE}} ({{HEAP_USED_SIZE_PER_SERVER}}/Server)"
-                        ]
-                    },
-                    {
-                        "name": "IDs",
-                        "value": [
-                            "**Hostname**: {{HOSTNAME}}",
-                            "**Shard ID**: {{SHARD_ID}}",
-                            "**Server ID**: {{SERVER_ID}}",
-                            "**Bot ID**: {{BOT_ID}}",
-                            "**User ID**: {{USER_ID}}"
-                        ]
-                    }
-                ]
-            }
-        },
         "validationEmbeds": {
             "cooldownHit": {
                 "description": "You can only run this command {{AMOUNT}} time(s) every {{INTERVAL}}. Please wait before attempting this command again.",
-                "color": "{{COM:colors.warning}}"
-            },
-            "devOnly": {
-                "description": "This action can only be done by developers.",
                 "color": "{{COM:colors.warning}}"
             },
             "missingClientPerms": {
@@ -182,42 +51,28 @@
         }
     },
     "refs": {
-        "meta": {
-            "translators": "[TranslatorName#1234](https://github.com/)"
-        },
-        "bot": {
-            "description": "{{REF:links.templateEmbed}} helps give developers a starting point for new Discord bots, so that much of the initial setup can be avoided and developers can instead focus on meaningful bot features."
-        },
         "chatCommands": {
-            "dev": "dev",
-            "help": "help",
-            "info": "info",
-            "test": "test"
-        },
-        "userCommands": {
-            "viewDateJoined": "View Date Joined"
-        },
-        "messageCommands": {
-            "viewDateSent": "View Date Sent"
+            "cb": "cb",
+            "bb": "bb",
+            "pin": "pin"
         },
         "arguments": {
-            "command": "command",
-            "option": "option"
+            "interaction": "interaction",
+            "note": "note",
+            "channel": "channel",
+            "template": "template"
         },
         "commandDescs": {
-            "dev": "Developer use only.",
-            "help": "Find help or contact support.",
-            "info": "View bot info.",
-            "test": "Run the test command."
+            "cb": "Close this bug report.",
+            "bb": "Block the poster of this bug report.",
+            "pin": "Post a template as a pinned message in a channel."
         },
         "argDescs": {
-            "devCommand": "Command.",
-            "helpOption": "Option.",
-            "infoOption": "Option."
-        },
-        "fields": {
-            "commands": "Commands",
-            "links": "Links"
+            "closeBugOption": "Interaction.",
+            "blockBugOption": "Interaction.",
+            "closeBugNote": "Add an optional developer note shown to the reporter",
+            "pinChannel": "Channel to post in. Defaults to where you run this.",
+            "pinTemplate": "Template to post."
         },
         "permissions": {
             "AddReactions": "Add Reactions",
@@ -272,21 +127,6 @@
             "ViewCreatorMonetizationAnalytics": "View Server Subscription Insights",
             "ViewGuildInsights": "View Server Insights"
         },
-        "devCommandNames": {
-            "info": "info"
-        },
-        "helpOptions": {
-            "contactSupport": "Contact Support",
-            "commands": "Commands"
-        },
-        "helpOptionDescs": {
-            "contactSupport": "❓ {{REF:helpOptions.contactSupport}} ❓",
-            "commands": "{{REF:helpOptions.commands}} -- What commands are there? How do I restrict who is allowed to use commands?"
-        },
-        "infoOptions": {
-            "about": "About",
-            "translate": "Translate"
-        },
         "yesNo": {
             "yes": "Yes",
             "no": "No"
@@ -298,16 +138,73 @@
         "other": {
             "na": "N/A"
         },
-        "links": {
-            "authorEmbed": "[{{COM:bot.author}}]({{COM:links.author}})",
-            "docsEmbed": "[View Documentation]({{COM:links.docs}})",
-            "donateEmbed": "[Donate via PayPal]({{COM:links.donate}})",
-            "inviteEmbed": "[Invite {{COM:bot.name}} to a Server!]({{COM:links.invite}})",
-            "sourceEmbed": "[View Source Code]({{COM:links.source}})",
-            "supportEmbed": "[Join Support Server]({{COM:links.support}})",
-            "templateEmbed": "[Discord Bot TypeScript Template]({{COM:links.template}})",
-            "termsEmbed": "[View Terms of Service]({{COM:links.terms}})",
-            "voteEmbed": "[Vote for {{COM:bot.name}}!]({{COM:links.vote}})"
+        "closeBugOptions": {
+            "willFix": "Close as will be fixed",
+            "wontFix": "Close as will not be fixed",
+            "spam": "Close as spam",
+            "spamAndBlock": "Close as spam and block poster",
+            "notEnoughInfo": "Close as not enough information"
+        },
+        "blockBugOptions": {
+            "block": "Block poster",
+            "blockAndKick": "Block and kick poster",
+            "blockAndBan": "Block and ban poster"
+        },
+        "bugReports": {
+            "threadWelcome": "📌 Thank you for submitting a bug report",
+            "missingHeader": "A few things to ensure are here",
+            "missingIntro": "You may have not included the following information, even though the bug report template requires it:",
+            "missingMedia": "**Screenshots or Videos**: Please attach an image or video of the issue you're facing, including your F9 console (PC/Laptop) or `/console` output (Mobile/Tablet). You can also see this by going to `Escape` > `Settings` and scrolling down to the `Open` button.",
+            "missingPlatform": "**Platform**: Please attach where you were playing: PC / Console / Mobile / Tablet.",
+            "missingDetail": "**More Detail**: Please describe what happened, and how to reproduce the issue clearer.",
+            "missingOutro": "Please edit your post to add the missing information, if so. Posts that don't follow the template will be automatically removed after a few hours.",
+            "logTitle": "Bug Report Closed",
+            "blockLogTitle": "Bug Reporter Blocked",
+            "dmBlockedTitle": "You've been blocked from bug reports",
+            "resolutionWillFix": "Confirmed as bug",
+            "resolutionWontFix": "Will not be fixed",
+            "resolutionSpam": "Closed as spam",
+            "resolutionSpamAndBlock": "Closed as spam, and the poster has been blocked!",
+            "dmHeaderWillFix": "# 💗 Thanks for the report!",
+            "dmHeaderWontFix": "# 💗 Thanks for the report!",
+            "dmHeaderSpam": "# 🚫 Report Closed",
+            "dmHeaderSpamAndBlock": "# 🚫 Report Closed",
+            "dmIntroSpam": "> Our development team has reviewed your bug report and closed it without action.",
+            "dmInfoTitle": "## **📁 Report Information**",
+            "dmLabelTitle": "Bug Title",
+            "dmLabelReviewedAt": "Reviewed At",
+            "dmLabelNote": "Developer Note",
+            "dmLabelStatus": "Report Status",
+            "dmStatusWillFix": "🟢 Closed as **will be fixed**",
+            "dmStatusWontFix": "🔴 Closed as **won't be fixed**",
+            "dmStatusSpam": "🔴 Closed as **spam**",
+            "dmStatusSpamAndBlock": "🔴 Closed as **spam**, you have been blocked from submitting further bug reports",
+            "dmDefaultNoteWillFix": "This issue has been confirmed and will be fixed when possible.",
+            "dmDefaultNoteWontFix": "This is intended behavior and will not be fixed.",
+            "dmDefaultNoteSpam": "This report was not a valid bug report.",
+            "dmDefaultNoteSpamAndBlock": "This report was not a valid bug report, and you have been blocked from reporting further bugs.",
+            "dmBlocked": "You have been blocked from the bug report forums.",
+            "dmKicked": "You have been blocked from the bug report forums and have been kicked from the server. Please read our policies in bug reports and community conduct before submitting another report",
+            "dmBanned": "You have been blocked from the bug report forums and have been banned from the Urbanshade discord.",
+            "auditClose": "Bug report closed by {{MODERATOR}} ({{RESOLUTION}})",
+            "auditBlock": "Blocked from bug reports by {{MODERATOR}}",
+            "resolutionNotEnoughInfo": "Closed - not enough information",
+            "dmHeaderNotEnoughInfo": "# 🔎 More Information Needed",
+            "dmIntroWillFix": "> Our development team has reviewed your bug report and has reached a conclusion on the outcome.",
+            "dmIntroWontFix": "> Our development team has reviewed your bug report and has reached a conclusion on the outcome.",
+            "dmIntroNotEnoughInfo": "> Our development team has reviewed your bug report, but there was not enough information provided for us to investigate it.",
+            "dmIntroSpamAndBlock": "> Our development team has reviewed your bug report and closed it without action.",
+            "dmStatusNotEnoughInfo": "🟡 Closed as **not enough information**",
+            "dmDefaultNoteNotEnoughInfo": "This report does not contain enough information for us to reproduce or investigate the issue.",
+            "dmOutroWillFix": "We appreciate the time you have taken to submit this bug report. If you would like to submit another bug report, please do so [here]({{FORUM_URL}}).",
+            "dmOutroWontFix": "We appreciate the time you have taken to submit this bug report. If you would like to submit another bug report, please do so [here]({{FORUM_URL}}).",
+            "dmOutroNotEnoughInfo": "Please submit a new report [here]({{FORUM_URL}}) with as much detail as you can: step-by-step instructions to reproduce the bug, what you expected to happen instead, and a screenshot or video if possible.\n\n**No action has been taken against you.** Please note that repeatedly submitting reports without enough information may result in your access to the bug forums being restricted.",
+            "dmOutroSpam": "We appreciate the time you have taken to submit this bug report. If you would like to submit another bug report, please do so [here]({{FORUM_URL}}).",
+            "dmOutroSpamAndBlock": "You have been blocked from the bug report forums and will not be able to submit further reports."
+        },
+        "spamFilter": {
+            "notice": "{USER}, your message was removed. False allegations about the Pressure team are not allowed here.",
+            "auditReason": "Spam filter: blocked content"
         }
     }
 }

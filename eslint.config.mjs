@@ -20,6 +20,7 @@ var customConfig = defineConfig([
             unicorn: eslintPluginUnicorn,
         },
         rules: {
+            'no-empty': ['error', { allowEmptyCatch: true }],
             '@typescript-eslint/explicit-function-return-type': [
                 'error',
                 {

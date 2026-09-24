@@ -8,10 +8,13 @@ import {
     Interaction,
     Message,
     MessageReaction,
+    OmitPartialGroupDMChannel,
+    PartialMessage,
     PartialMessageReaction,
     PartialUser,
     RateLimitData,
     RESTEvents,
+    ThreadChannel,
     User,
 } from 'discord.js';
 import { createRequire } from 'node:module';
@@ -23,9 +26,11 @@ import {
     GuildLeaveHandler,
     MessageHandler,
     ReactionHandler,
+    ThreadCreateHandler,
 } from '../events/index.js';
+import { CustomClient } from '../extensions/index.js';
 import { JobService, Logger } from '../services/index.js';
-import { PartialUtils } from '../utils/index.js';
+import { PartialUtils, PresenceUtils } from '../utils/index.js';
 
 const require = createRequire(import.meta.url);
 let Config = require('../../config/config.json');
@@ -44,6 +49,7 @@ export class Bot {
         private commandHandler: CommandHandler,
         private buttonHandler: ButtonHandler,
         private reactionHandler: ReactionHandler,
+        private threadCreateHandler: ThreadCreateHandler,
         private jobService: JobService
     ) {}
 
@@ -60,7 +66,15 @@ export class Bot {
         this.client.on(Events.GuildCreate, (guild: Guild) => this.onGuildJoin(guild));
         this.client.on(Events.GuildDelete, (guild: Guild) => this.onGuildLeave(guild));
         this.client.on(Events.MessageCreate, (msg: Message) => this.onMessage(msg));
+        this.client.on(
+            Events.MessageUpdate,
+            (_oldMsg, newMsg: OmitPartialGroupDMChannel<Message | PartialMessage>) =>
+                this.onMessageUpdate(newMsg as Message | PartialMessage)
+        );
         this.client.on(Events.InteractionCreate, (intr: Interaction) => this.onInteraction(intr));
+        this.client.on(Events.ThreadCreate, (thread: ThreadChannel, newlyCreated: boolean) =>
+            this.onThreadCreate(thread, newlyCreated)
+        );
         this.client.on(
             Events.MessageReactionAdd,
             (messageReaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) =>
@@ -84,6 +98,14 @@ export class Bot {
         let userTag = this.client.user?.tag;
         Logger.info(Logs.info.clientLogin.replaceAll('{USER_TAG}', userTag));
 
+        let presence = PresenceUtils.configured();
+        (this.client as CustomClient).setPresence(
+            presence.type,
+            presence.name,
+            presence.url,
+            presence.assets
+        );
+
         if (!Debug.dummyMode.enabled) {
             this.jobService.start();
         }
@@ -94,6 +116,18 @@ export class Bot {
 
     private onShardReady(shardId: number, _unavailableGuilds: Set<string>): void {
         Logger.setShardId(shardId);
+    }
+
+    private async onThreadCreate(thread: ThreadChannel, newlyCreated: boolean): Promise<void> {
+        if (!this.ready || Debug.dummyMode.enabled) {
+            return;
+        }
+
+        try {
+            await this.threadCreateHandler.process(thread, newlyCreated);
+        } catch (error) {
+            Logger.error(Logs.error.threadCreate, error);
+        }
     }
 
     private async onGuildJoin(guild: Guild): Promise<void> {
@@ -135,6 +169,26 @@ export class Bot {
             }
 
             await this.messageHandler.process(msg);
+        } catch (error) {
+            Logger.error(Logs.error.message, error);
+        }
+    }
+
+    private async onMessageUpdate(msg: Message | PartialMessage): Promise<void> {
+        if (
+            !this.ready ||
+            (Debug.dummyMode.enabled && !Debug.dummyMode.whitelist.includes(msg.author?.id))
+        ) {
+            return;
+        }
+
+        try {
+            let filled = await PartialUtils.fillMessage(msg as Message);
+            if (!filled) {
+                return;
+            }
+
+            await this.messageHandler.processEdit(filled);
         } catch (error) {
             Logger.error(Logs.error.message, error);
         }

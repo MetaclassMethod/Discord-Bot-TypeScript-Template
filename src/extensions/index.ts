@@ -1,1 +1,1 @@
-export { CustomClient } from './custom-client.js';
+export { CustomClient, PresenceAssets } from './custom-client.js';
