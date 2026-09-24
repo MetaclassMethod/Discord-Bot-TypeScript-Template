@@ -265,5 +265,15 @@ export class Permission {
                 return Lang.getRef('permissions.ViewGuildInsights', langCode);
             },
         },
+        SetVoiceChannelStatus: {
+            displayName(langCode: Locale): string {
+                return Lang.getRef('permissions.SetVoiceChannelStatus', langCode);
+            },
+        },
+        BypassSlowmode: {
+            displayName(langCode: Locale): string {
+                return Lang.getRef('permissions.BypassSlowmode', langCode);
+            },
+        },
     };
 }

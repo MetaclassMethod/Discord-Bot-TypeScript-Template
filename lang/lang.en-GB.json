@@ -54,25 +54,39 @@
         "chatCommands": {
             "cb": "cb",
             "bb": "bb",
-            "pin": "pin"
+            "pin": "pin",
+            "post": "post",
+            "postUpdate": "update",
+            "postUpdateLog": "log"
         },
         "arguments": {
             "interaction": "interaction",
             "note": "note",
             "channel": "channel",
-            "template": "template"
+            "template": "template",
+            "title": "title",
+            "ping": "ping",
+            "image": "image",
+            "extra": "extra"
         },
         "commandDescs": {
             "cb": "Close this bug report.",
             "bb": "Block the poster of this bug report.",
-            "pin": "Post a template as a pinned message in a channel."
+            "pin": "Post a template as a pinned message in a channel.",
+            "post": "Post announcements.",
+            "postUpdate": "Post update announcements.",
+            "postUpdateLog": "Post an update log in this channel."
         },
         "argDescs": {
             "closeBugOption": "Interaction.",
             "blockBugOption": "Interaction.",
             "closeBugNote": "Add an optional developer note shown to the reporter",
             "pinChannel": "Channel to post in. Defaults to where you run this.",
-            "pinTemplate": "Template to post."
+            "pinTemplate": "Template to post.",
+            "updateTitle": "Title of the update. Defaults to today's date.",
+            "updatePing": "Who to ping.",
+            "updateImage": "Banner image shown under the blurb.",
+            "updateExtra": "Template to add as an extra section."
         },
         "permissions": {
             "AddReactions": "Add Reactions",
@@ -125,7 +139,9 @@
             "ViewAuditLog": "View Audit Log",
             "ViewChannel": "View Channel(s)",
             "ViewCreatorMonetizationAnalytics": "View Server Subscription Insights",
-            "ViewGuildInsights": "View Server Insights"
+            "ViewGuildInsights": "View Server Insights",
+            "SetVoiceChannelStatus": "Set Voice Channel Status",
+            "BypassSlowmode": "Bypass Slowmode"
         },
         "yesNo": {
             "yes": "Yes",

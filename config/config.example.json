@@ -97,5 +97,17 @@
         "logChannelId": "",
         "timeoutSeconds": 0,
         "noticeSeconds": 8
+    },
+    "updates": {
+        "pings": [],
+        "buttons": [
+            {
+                "id": "play",
+                "label": "Play Now",
+                "emoji": "🎮",
+                "url": "https://www.roblox.com/games/12411473842/Pressure",
+                "default": true
+            }
+        ]
     }
 }

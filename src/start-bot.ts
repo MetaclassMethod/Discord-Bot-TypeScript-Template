@@ -3,7 +3,12 @@ import { Options, Partials } from 'discord.js';
 import { createRequire } from 'node:module';
 
 import { Button } from './buttons/index.js';
-import { BlockBugCommand, CloseBugCommand, PinTemplateCommand } from './commands/chat/index.js';
+import {
+    BlockBugCommand,
+    CloseBugCommand,
+    PinTemplateCommand,
+    UpdateCommand,
+} from './commands/chat/index.js';
 import {
     ChatCommandMetadata,
     Command,
@@ -53,6 +58,7 @@ async function start(): Promise<void> {
         new BlockBugCommand(),
         new CloseBugCommand(),
         new PinTemplateCommand(),
+        new UpdateCommand(),
     ];
 
     let buttons: Button[] = [];

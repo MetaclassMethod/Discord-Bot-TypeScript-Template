@@ -1,5 +1,8 @@
 import {
+    ApplicationCommandOptionType,
     ApplicationCommandType,
+    ApplicationIntegrationType,
+    InteractionContextType,
     PermissionFlagsBits,
     PermissionsBitField,
     RESTPostAPIChatInputApplicationCommandsJSONBody,
@@ -69,6 +72,47 @@ export const ChatCommandMetadata: {
             {
                 ...Args.PIN_CHANNEL,
                 required: false,
+            },
+        ],
+    },
+    POST: {
+        type: ApplicationCommandType.ChatInput,
+        name: Lang.getRef('chatCommands.post', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('chatCommands.post'),
+        description: Lang.getRef('commandDescs.post', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('commandDescs.post'),
+        dm_permission: false,
+        integration_types: [ApplicationIntegrationType.GuildInstall],
+        contexts: [InteractionContextType.Guild],
+        default_member_permissions: PermissionsBitField.resolve([
+            PermissionFlagsBits.ManageMessages,
+        ]).toString(),
+        options: [
+            {
+                type: ApplicationCommandOptionType.SubcommandGroup,
+                name: Lang.getRef('chatCommands.postUpdate', Language.Default),
+                name_localizations: Lang.getRefLocalizationMap('chatCommands.postUpdate'),
+                description: Lang.getRef('commandDescs.postUpdate', Language.Default),
+                description_localizations: Lang.getRefLocalizationMap('commandDescs.postUpdate'),
+                options: [
+                    {
+                        type: ApplicationCommandOptionType.Subcommand,
+                        name: Lang.getRef('chatCommands.postUpdateLog', Language.Default),
+                        name_localizations: Lang.getRefLocalizationMap(
+                            'chatCommands.postUpdateLog'
+                        ),
+                        description: Lang.getRef('commandDescs.postUpdateLog', Language.Default),
+                        description_localizations: Lang.getRefLocalizationMap(
+                            'commandDescs.postUpdateLog'
+                        ),
+                        options: [
+                            { ...Args.UPDATE_TITLE, required: false },
+                            { ...Args.UPDATE_PING, required: false },
+                            { ...Args.UPDATE_IMAGE, required: false },
+                            { ...Args.UPDATE_EXTRA, required: false },
+                        ],
+                    },
+                ],
             },
         ],
     },

@@ -8,3 +8,4 @@ export { Logger } from './logger.js';
 export { MasterApiService } from './master-api-service.js';
 export { TemplateService, TemplatePayload } from './template-service.js';
 export { SpamFilterService, SpamRule } from './spam-filter-service.js';
+export { UpdateLogService, UpdateLog, UpdateButton, UpdatePing } from './update-log-service.js';

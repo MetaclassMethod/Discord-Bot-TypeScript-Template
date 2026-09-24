@@ -99,4 +99,35 @@ export class Args {
             },
         ],
     };
+    public static readonly UPDATE_TITLE: APIApplicationCommandBasicOption = {
+        name: Lang.getRef('arguments.title', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('arguments.title'),
+        description: Lang.getRef('argDescs.updateTitle', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('argDescs.updateTitle'),
+        type: ApplicationCommandOptionType.String,
+        max_length: 200,
+    };
+    public static readonly UPDATE_PING: APIApplicationCommandBasicOption = {
+        name: Lang.getRef('arguments.ping', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('arguments.ping'),
+        description: Lang.getRef('argDescs.updatePing', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('argDescs.updatePing'),
+        type: ApplicationCommandOptionType.String,
+        autocomplete: true,
+    };
+    public static readonly UPDATE_IMAGE: APIApplicationCommandBasicOption = {
+        name: Lang.getRef('arguments.image', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('arguments.image'),
+        description: Lang.getRef('argDescs.updateImage', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('argDescs.updateImage'),
+        type: ApplicationCommandOptionType.Attachment,
+    };
+    public static readonly UPDATE_EXTRA: APIApplicationCommandBasicOption = {
+        name: Lang.getRef('arguments.extra', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('arguments.extra'),
+        description: Lang.getRef('argDescs.updateExtra', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('argDescs.updateExtra'),
+        type: ApplicationCommandOptionType.String,
+        autocomplete: true,
+    };
 }
