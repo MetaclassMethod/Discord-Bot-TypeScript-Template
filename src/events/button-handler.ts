@@ -1,9 +1,8 @@
-import { ButtonInteraction } from 'discord.js';
 import { RateLimiter } from 'discord.js-rate-limiter';
 import { createRequire } from 'node:module';
 
 import { EventHandler } from './index.js';
-import { Button, ButtonDeferType } from '../buttons/index.js';
+import { Button, ButtonDeferType, ComponentInteraction } from '../buttons/index.js';
 import { EventDataService } from '../services/index.js';
 import { InteractionUtils } from '../utils/index.js';
 
@@ -21,7 +20,7 @@ export class ButtonHandler implements EventHandler {
         private eventDataService: EventDataService
     ) {}
 
-    public async process(intr: ButtonInteraction): Promise<void> {
+    public async process(intr: ComponentInteraction): Promise<void> {
         if (intr.user.id === intr.client.user?.id || intr.user.bot) {
             return;
         }

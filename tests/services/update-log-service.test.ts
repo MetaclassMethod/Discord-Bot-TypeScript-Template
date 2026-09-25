@@ -47,6 +47,15 @@ describe('UpdateLogService', () => {
         });
     });
 
+    describe('alias', () => {
+        it('should fall back to the first alias for an unknown id', () => {
+            const first = UpdateLogService.aliases()[0];
+            expect(UpdateLogService.alias('nope')).toEqual(first);
+            expect(UpdateLogService.alias(undefined)).toEqual(first);
+            expect(first.name).not.toMatch(/nordlys/i);
+        });
+    });
+
     describe('build', () => {
         it('should lay out the header, sections and buttons', () => {
             const components = UpdateLogService.build({

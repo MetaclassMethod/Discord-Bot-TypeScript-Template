@@ -5,7 +5,7 @@ export { MathUtils } from './math-utils.js';
 export { MessageUtils } from './message-utils.js';
 export { PartialUtils } from './partial-utils.js';
 export { PermissionUtils } from './permission-utils.js';
-export { PresenceUtils, PresenceOptions } from './presence-utils.js';
+export { PresenceUtils, type PresenceOptions } from './presence-utils.js';
 export { RandomUtils } from './random-utils.js';
 export { RegexUtils } from './regex-utils.js';
 export { ShardUtils } from './shard-utils.js';

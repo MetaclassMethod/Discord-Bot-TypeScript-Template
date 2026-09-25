@@ -7,6 +7,7 @@ import { Job, UpdateServerCountJob } from './jobs/index.js';
 import { Api } from './models/api.js';
 import { Manager } from './models/manager.js';
 import { HttpService, JobService, Logger, MasterApiService } from './services/index.js';
+import { applyBotEnv, DEV_FLAG } from './utils/bot-env.js';
 import { MathUtils, ShardUtils } from './utils/index.js';
 
 const require = createRequire(import.meta.url);
@@ -16,6 +17,7 @@ let Logs = require('../lang/logs.json');
 
 async function start(): Promise<void> {
     Logger.info(Logs.info.appStarted);
+    let dev = applyBotEnv();
 
     let httpService = new HttpService();
     let masterApiService = new MasterApiService(httpService);
@@ -55,6 +57,7 @@ async function start(): Promise<void> {
         respawn: true,
         totalShards,
         shardList,
+        shardArgs: dev ? [DEV_FLAG] : [],
     });
 
     let jobs: Job[] = [

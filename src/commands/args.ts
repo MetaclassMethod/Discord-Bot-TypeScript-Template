@@ -130,4 +130,39 @@ export class Args {
         type: ApplicationCommandOptionType.String,
         autocomplete: true,
     };
+    public static readonly UPDATE_AS: APIApplicationCommandBasicOption = {
+        name: Lang.getRef('arguments.as', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('arguments.as'),
+        description: Lang.getRef('argDescs.updateAs', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('argDescs.updateAs'),
+        type: ApplicationCommandOptionType.String,
+        autocomplete: true,
+    };
+    public static readonly TICKET_STATE: APIApplicationCommandBasicOption = {
+        name: Lang.getRef('arguments.state', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('arguments.state'),
+        description: Lang.getRef('argDescs.ticketState', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('argDescs.ticketState'),
+        type: ApplicationCommandOptionType.String,
+        choices: [
+            { name: 'Open', value: 'open' },
+            { name: 'Paused', value: 'paused' },
+        ],
+    };
+    public static readonly TICKET_MESSAGE: APIApplicationCommandBasicOption = {
+        name: Lang.getRef('arguments.message', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('arguments.message'),
+        description: Lang.getRef('argDescs.ticketMessage', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('argDescs.ticketMessage'),
+        type: ApplicationCommandOptionType.String,
+        max_length: 1500,
+    };
+    public static readonly TICKET_CLOSE_NOTE: APIApplicationCommandBasicOption = {
+        name: Lang.getRef('arguments.note', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('arguments.note'),
+        description: Lang.getRef('argDescs.ticketCloseNote', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('argDescs.ticketCloseNote'),
+        type: ApplicationCommandOptionType.String,
+        max_length: 1500,
+    };
 }

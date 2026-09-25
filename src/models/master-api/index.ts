@@ -1,5 +1,5 @@
 export {
     RegisterClusterRequest,
-    RegisterClusterResponse,
-    LoginClusterResponse,
+    type RegisterClusterResponse,
+    type LoginClusterResponse,
 } from './clusters.js';

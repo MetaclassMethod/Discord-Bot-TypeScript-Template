@@ -1,0 +1,130 @@
+{
+    "title": "Support",
+    "components": [
+        {
+            "type": 17,
+            "accent_color": 7725,
+            "components": [
+                {
+                    "type": 10,
+                    "content": "# 🛟 Support Hub\n> Need help from staff? Pick what your issue is about below. I'll DM you, and you can talk with staff privately there."
+                },
+                {
+                    "type": 14,
+                    "divider": true,
+                    "spacing": 2
+                },
+                {
+                    "type": 9,
+                    "components": [
+                        {
+                            "type": 10,
+                            "content": "### 🚩 Report Player\nYou can use this system to report active violations of Roblox TOS and active exploiting in your server."
+                        }
+                    ],
+                    "accessory": {
+                        "type": 11,
+                        "media": {
+                            "url": "attachment://ticket_report.png"
+                        }
+                    }
+                },
+                {
+                    "type": 9,
+                    "components": [
+                        {
+                            "type": 10,
+                            "content": "### ⚖️ Appeal an Account Ban\nYou can appeal your ban from this ticket type. You are required to provide the full, unaltered context of the situation as well as photography/videos for our team to review."
+                        }
+                    ],
+                    "accessory": {
+                        "type": 11,
+                        "media": {
+                            "url": "attachment://ticket_appeal.png"
+                        }
+                    }
+                },
+                {
+                    "type": 9,
+                    "components": [
+                        {
+                            "type": 10,
+                            "content": "### 💾 Data/Purchase Issues\nLost progress, missing items, or a purchase that didn't go through."
+                        }
+                    ],
+                    "accessory": {
+                        "type": 11,
+                        "media": {
+                            "url": "attachment://ticket_data.png"
+                        }
+                    }
+                },
+                {
+                    "type": 9,
+                    "components": [
+                        {
+                            "type": 10,
+                            "content": "### ❓ Questions/Concerns\nThis category is NOT for:\n- Ban Appeals\n- Submitting suggestions or asking if new features are coming\n- Applying for roles\n- Reporting staff members"
+                        }
+                    ],
+                    "accessory": {
+                        "type": 11,
+                        "media": {
+                            "url": "attachment://ticket_question.png"
+                        }
+                    }
+                },
+                {
+                    "type": 14,
+                    "divider": true,
+                    "spacing": 2
+                },
+                {
+                    "type": 1,
+                    "components": [
+                        {
+                            "type": 3,
+                            "custom_id": "ticket:type",
+                            "placeholder": "What do you need help with?",
+                            "options": [
+                                {
+                                    "label": "Report Player",
+                                    "value": "report",
+                                    "description": "Report an exploiter, someone abusing bugs, or any other rule breaker.",
+                                    "emoji": {
+                                        "name": "🚩"
+                                    }
+                                },
+                                {
+                                    "label": "Appeal an Account Ban",
+                                    "value": "ban-appeal",
+                                    "emoji": {
+                                        "name": "⚖️"
+                                    }
+                                },
+                                {
+                                    "label": "Data/Purchase Issues",
+                                    "value": "data-issue",
+                                    "emoji": {
+                                        "name": "💾"
+                                    }
+                                },
+                                {
+                                    "label": "Questions/Concerns",
+                                    "value": "question",
+                                    "emoji": {
+                                        "name": "❓"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": 10,
+                    "content": "-# Pick an option to open a ticket. Make sure your DMs are open for this server so I can message you."
+                }
+            ]
+        }
+    ]
+}

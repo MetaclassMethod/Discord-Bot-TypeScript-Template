@@ -1,0 +1,19 @@
+{
+    "title": "Important Information",
+    "components": [
+        {
+            "type": 10,
+            "content": "# Important Information\n📌 Please check the FAQ and announcements before opening a ticket, your answer might already be there.\nℹ️ **Please explain your issue fully and clearly so staff can help you quickly.**"
+        },
+        {
+            "type": 17,
+            "accent_color": 14823472,
+            "components": [
+                {
+                    "type": 10,
+                    "content": "### ⚠️ Please read before opening a ticket\n1️⃣ If you're reporting a **bug**, use the bug reports forum instead.\n2️⃣ If you're reporting a **player**, include their username and any clips or screenshots you have.\n3️⃣ If you're asking about **data or a purchase**, include your Roblox username and roughly when it happened.\n\n**Opening tickets for no reason, or spamming them, may get you blocked from support.**"
+                }
+            ]
+        }
+    ]
+}

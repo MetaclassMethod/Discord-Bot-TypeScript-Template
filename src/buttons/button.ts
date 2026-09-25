@@ -1,4 +1,6 @@
-import { ButtonInteraction } from 'discord.js';
+import { ButtonInteraction, StringSelectMenuInteraction } from 'discord.js';
+
+export type ComponentInteraction = ButtonInteraction | StringSelectMenuInteraction;
 
 import { EventData } from '../models/internal-models.js';
 
@@ -7,7 +9,7 @@ export interface Button {
     deferType: ButtonDeferType;
     requireGuild: boolean;
     requireEmbedAuthorTag: boolean;
-    execute(intr: ButtonInteraction, data: EventData): Promise<void>;
+    execute(intr: ComponentInteraction, data: EventData): Promise<void>;
 }
 
 export enum ButtonDeferType {

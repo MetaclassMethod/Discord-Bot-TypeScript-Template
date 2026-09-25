@@ -208,7 +208,7 @@ export class Bot {
             } catch (error) {
                 Logger.error(Logs.error.command, error);
             }
-        } else if (intr instanceof ButtonInteraction) {
+        } else if (intr instanceof ButtonInteraction || intr.isStringSelectMenu()) {
             try {
                 await this.buttonHandler.process(intr);
             } catch (error) {

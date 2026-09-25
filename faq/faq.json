@@ -1,0 +1,64 @@
+{
+    "minScore": 2,
+    "entries": [
+        {
+            "id": "lost-progress",
+            "question": "I lost my progress or items",
+            "answer": "Your data may take a moment to load after joining. Rejoin the game once and wait on the lobby screen for a few seconds before checking again.\n\nIf it's still missing after rejoining, open a ticket and include your **Roblox username** and **roughly when you last saw it**.",
+            "keywords": [
+                "lost progress",
+                "lost data",
+                "data wiped",
+                "data reset",
+                "progress reset",
+                "progress gone",
+                "items gone",
+                "missing items",
+                "lost items",
+                "lost level",
+                "wiped"
+            ],
+            "categories": ["data-issue", "question"]
+        },
+        {
+            "id": "purchase-missing",
+            "question": "I bought something but didn't get it",
+            "answer": "Purchases sometimes take a few minutes to go through. Rejoin the game and check again.\n\nIf you still don't have it, open a ticket with your **Roblox username**, **what you bought**, and **when**. A screenshot of your Robux transaction history helps a lot.",
+            "keywords": [
+                "bought",
+                "purchase",
+                "purchased",
+                "robux",
+                "didnt get",
+                "didnt receive",
+                "not received",
+                "gamepass",
+                "game pass",
+                "paid",
+                "purchasing"
+            ],
+            "categories": ["data-issue", "question"]
+        },
+        {
+            "id": "bug-report",
+            "question": "How do I report a bug?",
+            "answer": "Bugs go in the bug reports forum, not tickets. Please read the pinned guidelines there before posting so the team can reproduce it.",
+            "keywords": ["bug", "glitch", "broken", "crash", "crashing", "not working", "stuck"],
+            "categories": ["question"]
+        },
+        {
+            "id": "next-update",
+            "question": "When is the next update?",
+            "answer": "We don't give out update dates ahead of time. Keep an eye on the announcements channel!",
+            "keywords": [
+                "next update",
+                "update release",
+                "update come out",
+                "when update",
+                "release date",
+                "new update"
+            ],
+            "categories": ["question"]
+        }
+    ]
+}

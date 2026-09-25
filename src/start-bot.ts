@@ -2,11 +2,13 @@ import { REST } from '@discordjs/rest';
 import { Options, Partials } from 'discord.js';
 import { createRequire } from 'node:module';
 
-import { Button } from './buttons/index.js';
+import { Button, TicketButton } from './buttons/index.js';
 import {
     BlockBugCommand,
     CloseBugCommand,
     PinTemplateCommand,
+    TicketCloseCommand,
+    TicketCommand,
     UpdateCommand,
 } from './commands/chat/index.js';
 import {
@@ -36,12 +38,14 @@ import {
     Logger,
 } from './services/index.js';
 import { Trigger } from './triggers/index.js';
+import { applyBotEnv, DEV_FLAG } from './utils/bot-env.js';
 
 const require = createRequire(import.meta.url);
 let Config = require('../config/config.json');
 let Logs = require('../lang/logs.json');
 
 async function start(): Promise<void> {
+    applyBotEnv();
     let eventDataService = new EventDataService();
 
     let client = new CustomClient({
@@ -58,10 +62,12 @@ async function start(): Promise<void> {
         new BlockBugCommand(),
         new CloseBugCommand(),
         new PinTemplateCommand(),
+        new TicketCloseCommand(),
+        new TicketCommand(),
         new UpdateCommand(),
     ];
 
-    let buttons: Button[] = [];
+    let buttons: Button[] = [new TicketButton()];
 
     let reactions: Reaction[] = [];
 
@@ -90,7 +96,7 @@ async function start(): Promise<void> {
         new JobService(jobs)
     );
 
-    if (process.argv[2] == 'commands') {
+    if (process.argv.includes('commands')) {
         try {
             let rest = new REST({ version: '10' }).setToken(Config.client.token);
             let commandRegistrationService = new CommandRegistrationService(rest);
@@ -99,7 +105,10 @@ async function start(): Promise<void> {
                 ...Object.values(MessageCommandMetadata).sort((a, b) => (a.name > b.name ? 1 : -1)),
                 ...Object.values(UserCommandMetadata).sort((a, b) => (a.name > b.name ? 1 : -1)),
             ];
-            await commandRegistrationService.process(localCmds, process.argv);
+            await commandRegistrationService.process(
+                localCmds,
+                process.argv.filter(arg => arg !== DEV_FLAG)
+            );
         } catch (error) {
             Logger.error(Logs.error.commandAction, error);
         }

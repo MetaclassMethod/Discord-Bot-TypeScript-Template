@@ -2,6 +2,10 @@
     "developers": ["<YOUR_DISCORD_ID>"],
     "client": {
         "id": "<DISCORD_BOT_ID>",
+        "dev": {
+            "id": "<DEV_BOT_ID>",
+            "token": "<DEV_BOT_TOKEN>"
+        },
         "token": "<DISCORD_BOT_TOKEN>",
         "intents": [
             "Guilds",
@@ -98,7 +102,18 @@
         "timeoutSeconds": 0,
         "noticeSeconds": 8
     },
+    "tickets": {
+        "hubChannelId": "",
+        "staffChannelId": "",
+        "pingRoleId": "",
+        "selfServiceChannelIds": [],
+        "transcriptChannelId": ""
+    },
     "updates": {
+        "aliases": [
+            { "id": "pressure", "name": "Pressure Release Notes", "avatar": "" },
+            { "id": "salvage", "name": "Salvation Operation: Release Notes", "avatar": "" }
+        ],
         "pings": [],
         "buttons": [
             {

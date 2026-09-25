@@ -75,6 +75,68 @@ export const ChatCommandMetadata: {
             },
         ],
     },
+    TICKET: {
+        type: ApplicationCommandType.ChatInput,
+        name: Lang.getRef('chatCommands.ticket', Language.Default),
+        name_localizations: Lang.getRefLocalizationMap('chatCommands.ticket'),
+        description: Lang.getRef('commandDescs.ticket', Language.Default),
+        description_localizations: Lang.getRefLocalizationMap('commandDescs.ticket'),
+        dm_permission: false,
+        integration_types: [ApplicationIntegrationType.GuildInstall],
+        contexts: [InteractionContextType.Guild],
+        default_member_permissions: PermissionsBitField.resolve([
+            PermissionFlagsBits.ManageMessages,
+        ]).toString(),
+        options: [
+            {
+                type: ApplicationCommandOptionType.Subcommand,
+                name: Lang.getRef('chatCommands.ticketStatus', Language.Default),
+                name_localizations: Lang.getRefLocalizationMap('chatCommands.ticketStatus'),
+                description: Lang.getRef('commandDescs.ticketStatus', Language.Default),
+                description_localizations: Lang.getRefLocalizationMap('commandDescs.ticketStatus'),
+                options: [
+                    { ...Args.TICKET_STATE, required: false },
+                    { ...Args.TICKET_MESSAGE, required: false },
+                ],
+            },
+            {
+                type: ApplicationCommandOptionType.SubcommandGroup,
+                name: Lang.getRef('chatCommands.ticketClose', Language.Default),
+                name_localizations: Lang.getRefLocalizationMap('chatCommands.ticketClose'),
+                description: Lang.getRef('commandDescs.ticketClose', Language.Default),
+                description_localizations: Lang.getRefLocalizationMap('commandDescs.ticketClose'),
+                options: [
+                    {
+                        type: ApplicationCommandOptionType.Subcommand,
+                        name: Lang.getRef('chatCommands.ticketCloseCurrent', Language.Default),
+                        name_localizations: Lang.getRefLocalizationMap(
+                            'chatCommands.ticketCloseCurrent'
+                        ),
+                        description: Lang.getRef(
+                            'commandDescs.ticketCloseCurrent',
+                            Language.Default
+                        ),
+                        description_localizations: Lang.getRefLocalizationMap(
+                            'commandDescs.ticketCloseCurrent'
+                        ),
+                        options: [{ ...Args.TICKET_CLOSE_NOTE, required: false }],
+                    },
+                    {
+                        type: ApplicationCommandOptionType.Subcommand,
+                        name: Lang.getRef('chatCommands.ticketCloseAll', Language.Default),
+                        name_localizations: Lang.getRefLocalizationMap(
+                            'chatCommands.ticketCloseAll'
+                        ),
+                        description: Lang.getRef('commandDescs.ticketCloseAll', Language.Default),
+                        description_localizations: Lang.getRefLocalizationMap(
+                            'commandDescs.ticketCloseAll'
+                        ),
+                        options: [{ ...Args.TICKET_CLOSE_NOTE, required: false }],
+                    },
+                ],
+            },
+        ],
+    },
     POST: {
         type: ApplicationCommandType.ChatInput,
         name: Lang.getRef('chatCommands.post', Language.Default),
@@ -110,6 +172,7 @@ export const ChatCommandMetadata: {
                             { ...Args.UPDATE_PING, required: false },
                             { ...Args.UPDATE_IMAGE, required: false },
                             { ...Args.UPDATE_EXTRA, required: false },
+                            { ...Args.UPDATE_AS, required: false },
                         ],
                     },
                 ],

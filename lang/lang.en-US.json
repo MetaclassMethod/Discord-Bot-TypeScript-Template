@@ -57,7 +57,12 @@
             "pin": "pin",
             "post": "post",
             "postUpdate": "update",
-            "postUpdateLog": "log"
+            "postUpdateLog": "log",
+            "ticket": "ticket",
+            "ticketStatus": "status",
+            "ticketClose": "close",
+            "ticketCloseCurrent": "current",
+            "ticketCloseAll": "all"
         },
         "arguments": {
             "interaction": "interaction",
@@ -67,7 +72,10 @@
             "title": "title",
             "ping": "ping",
             "image": "image",
-            "extra": "extra"
+            "extra": "extra",
+            "as": "as",
+            "state": "state",
+            "message": "message"
         },
         "commandDescs": {
             "cb": "Close this bug report.",
@@ -75,7 +83,12 @@
             "pin": "Post a template as a pinned message in a channel.",
             "post": "Post announcements.",
             "postUpdate": "Post update announcements.",
-            "postUpdateLog": "Post an update log in this channel."
+            "postUpdateLog": "Post an update log in this channel.",
+            "ticket": "Manage support tickets.",
+            "ticketStatus": "See or change whether people can open new tickets.",
+            "ticketClose": "Close tickets.",
+            "ticketCloseCurrent": "Close the ticket in this thread.",
+            "ticketCloseAll": "Close every open ticket."
         },
         "argDescs": {
             "closeBugOption": "Interaction.",
@@ -86,7 +99,11 @@
             "updateTitle": "Title of the update. Defaults to today's date.",
             "updatePing": "Who to ping.",
             "updateImage": "Banner image shown under the blurb.",
-            "updateExtra": "Template to add as an extra section."
+            "updateExtra": "Template to add as an extra section.",
+            "ticketCloseNote": "Note sent to the user in their DM when the ticket closes.",
+            "ticketState": "Open or pause new tickets. Leave empty to just see the current status.",
+            "ticketMessage": "Message shown while paused. Type 'default' to go back to the default.",
+            "updateAs": "Name the game the update is posted under. Defaults to Pressure!"
         },
         "permissions": {
             "AddReactions": "Add Reactions",

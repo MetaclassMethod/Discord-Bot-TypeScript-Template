@@ -9,8 +9,10 @@ import {
     MessageFlags,
     ModalBuilder,
     PermissionsString,
+    SendableChannels,
     TextInputBuilder,
     TextInputStyle,
+    Webhook,
 } from 'discord.js';
 import { RateLimiter } from 'discord.js-rate-limiter';
 
@@ -19,6 +21,7 @@ import { EventData } from '../../models/internal-models.js';
 import { Lang, Logger, TemplateService, UpdateLogService } from '../../services/index.js';
 import { Command, CommandDeferType } from '../index.js';
 
+const WEBHOOK_NAME = 'Release Notes';
 const MODAL_TIMEOUT_MS = 15 * 60 * 1000;
 const FIELDS = {
     blurb: 'blurb',
@@ -36,7 +39,12 @@ export class UpdateCommand implements Command {
     ];
     public cooldown = new RateLimiter(3, 10000);
     public deferType = CommandDeferType.NONE;
-    public requireClientPerms: PermissionsString[] = ['ViewChannel', 'SendMessages', 'AttachFiles'];
+    public requireClientPerms: PermissionsString[] = [
+        'ViewChannel',
+        'SendMessages',
+        'AttachFiles',
+        'ManageWebhooks',
+    ];
 
     public async autocomplete(
         _intr: AutocompleteInteraction,
@@ -46,7 +54,9 @@ export class UpdateCommand implements Command {
         let choices =
             option.name === Lang.getRef('arguments.ping', Language.Default)
                 ? UpdateLogService.pings()
-                : TemplateService.list().map(name => ({ name, value: name }));
+                : option.name === Lang.getRef('arguments.as', Language.Default)
+                  ? UpdateLogService.aliases().map(alias => ({ name: alias.name, value: alias.id }))
+                  : TemplateService.list().map(name => ({ name, value: name }));
         return choices.filter(choice => choice.name.toLowerCase().includes(search)).slice(0, 25);
     }
 
@@ -57,6 +67,9 @@ export class UpdateCommand implements Command {
         let ping = intr.options.getString(Lang.getRef('arguments.ping', Language.Default));
         let image = intr.options.getAttachment(Lang.getRef('arguments.image', Language.Default));
         let extraName = intr.options.getString(Lang.getRef('arguments.extra', Language.Default));
+        let alias = UpdateLogService.alias(
+            intr.options.getString(Lang.getRef('arguments.as', Language.Default)) ?? undefined
+        );
 
         if (image && !image.contentType?.startsWith('image/')) {
             await intr.reply({
@@ -123,7 +136,16 @@ export class UpdateCommand implements Command {
         }
 
         try {
-            await channel.send({
+            let webhook = await this.webhook(channel);
+            if (!webhook) {
+                await submit.editReply(`I can't post webhook messages in this channel.`);
+                return;
+            }
+            await webhook.send({
+                username: alias.name,
+                avatarURL: alias.avatar || undefined,
+                threadId: channel.isThread() ? channel.id : undefined,
+                withComponents: true,
                 components,
                 files: [
                     ...(image ? [new AttachmentBuilder(image.url, { name: imageName })] : []),
@@ -141,6 +163,18 @@ export class UpdateCommand implements Command {
         }
 
         await submit.editReply(`Update posted.`);
+    }
+
+    private async webhook(channel: SendableChannels): Promise<Webhook | undefined> {
+        let target = channel.isThread() ? channel.parent : channel;
+        if (!target || !('fetchWebhooks' in target)) {
+            return undefined;
+        }
+        let webhooks = await target.fetchWebhooks();
+        let existing = webhooks.find(
+            webhook => webhook.applicationId === channel.client.application.id && webhook.token
+        );
+        return existing ?? (await target.createWebhook({ name: WEBHOOK_NAME }));
     }
 
     private modal(customId: string): ModalBuilder {

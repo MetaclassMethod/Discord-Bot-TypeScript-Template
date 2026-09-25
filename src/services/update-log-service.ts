@@ -32,6 +32,12 @@ export interface UpdateButton {
     default?: boolean;
 }
 
+export interface UpdateAlias {
+    id: string;
+    name: string;
+    avatar?: string;
+}
+
 export interface UpdateLog {
     title: string;
     blurb?: string;
@@ -56,6 +62,16 @@ export class UpdateLogService {
 
     public static buttons(): UpdateButton[] {
         return (Config.updates?.buttons ?? []).slice(0, MAX_BUTTONS);
+    }
+
+    public static aliases(): UpdateAlias[] {
+        let aliases: UpdateAlias[] = Config.updates?.aliases ?? [];
+        return aliases.length > 0 ? aliases : [{ id: 'pressure', name: 'Pressure Release Notes' }];
+    }
+
+    public static alias(id?: string): UpdateAlias {
+        let aliases = this.aliases();
+        return aliases.find(alias => alias.id === id) ?? aliases[0];
     }
 
     public static defaultTitle(date: Date = new Date()): string {

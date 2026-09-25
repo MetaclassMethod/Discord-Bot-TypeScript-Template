@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 
 import { EventHandler, TriggerHandler } from './index.js';
-import { SpamFilterService } from '../services/index.js';
+import { SpamFilterService, TicketRelayService } from '../services/index.js';
 
 export class MessageHandler implements EventHandler {
     constructor(private triggerHandler: TriggerHandler) {}
@@ -12,6 +12,10 @@ export class MessageHandler implements EventHandler {
         }
 
         if (await SpamFilterService.process(msg)) {
+            return;
+        }
+
+        if (await TicketRelayService.process(msg)) {
             return;
         }
 
